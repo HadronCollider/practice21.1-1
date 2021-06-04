@@ -25,8 +25,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val next = findViewById<Button>(R.id.button11)
         next.setOnClickListener{
-            val intentTo2 = Intent(this, LoadingScreen::class.java)
-            startActivity(intentTo2)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                ContextCompat.checkSelfPermission(applicationContext,android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+                val intentTo2 = Intent(this, LoadingScreen::class.java)
+                startActivity(intentTo2)
+            }
+            else {
+                Toast.makeText(applicationContext,"Предоставьте доступ к галлерее с помощью кнопки снизу!", Toast.LENGTH_SHORT).show()
+            }
         }
         val settings = findViewById<Button>(R.id.button12)
         settings.setOnClickListener{
@@ -39,12 +46,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun buttonTaps(){
         button13.setOnClickListener {
-            checkforPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE, "read media files", RQ)
+            checkForPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE, "read media files", RQ)
         }
 
     }
 
-    private fun checkforPermissions(permission:String, name:String,requestCode: Int){
+    private fun checkForPermissions(permission:String, name:String,requestCode: Int){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             when {
                 ContextCompat.checkSelfPermission(applicationContext,permission) == PackageManager.PERMISSION_GRANTED -> {
