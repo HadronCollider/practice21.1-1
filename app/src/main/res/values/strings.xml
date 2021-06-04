@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PhotoEditor</string>
+    <string name="next">Далее</string>
+    <string name="prev">Назад</string>
+    <string name="conformation">Подтвердить</string>
+    <string name="saving">Сохранить</string>
+    <string name="settings">Настройки</string>
+    <string name="starting">Начать обработку</string>
 </resources>

@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="152dp"
+        android:layout_height="156dp"
+        android:layout_marginTop="40dp"
         android:src="@drawable/ic_launcher_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,13 +21,13 @@
     <Button
         android:id="@+id/button11"
         style="@android:style/Widget.DeviceDefault.Button"
-        android:layout_width="160dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="170dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="40dp"
         android:bufferType="spannable"
         android:ellipsize="middle"
         android:fadingEdge="horizontal"
-        android:text="Начать работу"
+        android:text="@string/starting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +35,10 @@
 
     <Button
         android:id="@+id/button12"
-        android:layout_width="160dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="60dp"
-        android:text="Настройки"
+        android:layout_width="170dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button11" />

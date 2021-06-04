@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Log.d("test","succes")
         val next = findViewById<Button>(R.id.button11)
         next.setOnClickListener{
             val intentTo2 = Intent(this, LoadingScreen::class.java)
