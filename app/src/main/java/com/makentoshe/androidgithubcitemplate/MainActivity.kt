@@ -1,14 +1,21 @@
 package com.makentoshe.androidgithubcitemplate
 
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +26,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         buttonTaps()
+
+        fun getCameraImages(): List<String> {
+            val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            val cursor: Cursor?
+            val listOfAllImages = ArrayList<String>()
+            var absolutePathOfImage: String? = null
+
+            val projection = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+
+            cursor = contentResolver.query(uri, projection, null,
+                null, null);
+
+            val columnIndexData: Int = cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
+            val columnIndexFolderName = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
+            while (cursor.moveToNext()) {
+                absolutePathOfImage = cursor.getString(columnIndexData)
+                listOfAllImages.add(absolutePathOfImage)
+            }
+            return listOfAllImages
+        }
+        val b2 = findViewById<Button>(R.id.button2)
+        var cur: Int = 0;
+        val photos = getCameraImages();
+        b2.setOnClickListener {
+            val g = findViewById<ImageView>(R.id.imageView);
+            g.setImageURI(Uri.fromFile(File(photos[cur])))
+            cur = (cur + 1) % photos.size;
+        }
     }
 
     private fun buttonTaps(){
