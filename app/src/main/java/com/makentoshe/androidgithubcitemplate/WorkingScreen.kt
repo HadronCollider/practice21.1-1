@@ -82,6 +82,10 @@ class WorkingScreen : AppCompatActivity() {
                 if (currentParameter == 'c'){
                 }
                 if (currentParameter == 'r'){
+                    photo.rotation = (progress.toFloat() - 128) * 180 / 128
+                    if (progress == 255){
+                        photo.rotation = 180.toFloat()
+                    }
                 }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
