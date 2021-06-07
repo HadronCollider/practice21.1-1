@@ -1,8 +1,8 @@
 package com.makentoshe.androidgithubcitemplate
 
+import android.R.attr.*
 import android.content.Intent
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -25,25 +25,55 @@ class WorkingScreen : AppCompatActivity() {
             val intentTo5 = Intent(this, FinishingScreen::class.java)
             startActivity(intentTo5)
         }
+        val seek = findViewById<SeekBar>(R.id.seekBar)
+        val photo = findViewById<ImageView>(R.id.image_changing_photo)
         var currentParameter = 'b'
+        seek.progress = 128
+        var brightnessLevel = 128
+        var contrastLevel = 128
+        var rotationLevel = 128
         val brightness = findViewById<Button>(R.id.brightness_button)
         brightness.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
+            val whatWasCurrent = currentParameter
             currentParameter = 'b'
+            if (whatWasCurrent == 'c'){
+                contrastLevel = seek.progress
+                seek.progress = brightnessLevel
+            }
+            if (whatWasCurrent == 'r'){
+                rotationLevel = seek.progress
+                seek.progress = brightnessLevel
+            }
         }
         val contrast = findViewById<Button>(R.id.contrast_button)
         contrast.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
+            val whatWasCurrent = currentParameter
             currentParameter = 'c'
+            if (whatWasCurrent == 'b'){
+                brightnessLevel = seek.progress
+                seek.progress = contrastLevel
+            }
+            if (whatWasCurrent == 'r'){
+                rotationLevel = seek.progress
+                seek.progress = contrastLevel
+            }
         }
         val rotation = findViewById<Button>(R.id.rotation_button)
         rotation.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
+            val whatWasCurrent = currentParameter
             currentParameter = 'r'
+            if (whatWasCurrent == 'b'){
+                brightnessLevel = seek.progress
+                seek.progress = rotationLevel
+            }
+            if (whatWasCurrent == 'c'){
+                contrastLevel = seek.progress
+                seek.progress = rotationLevel
+            }
         }
-        val seek = findViewById<SeekBar>(R.id.seekBar)
-        val photo = findViewById<ImageView>(R.id.image_changing_photo)
-        seek.progress = 128
         seek.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (currentParameter == 'b'){
@@ -60,11 +90,11 @@ class WorkingScreen : AppCompatActivity() {
 
     }
     fun changeBrightness(progress: Int): PorterDuffColorFilter {
-        return if (progress >= 100) {
-            val value = (progress - 100) * 255 / 100
+        return if (progress >= 128) {
+            val value = (progress - 128) * 255 / 128
             PorterDuffColorFilter(Color.argb(value, 255, 255, 255), PorterDuff.Mode.SRC_OVER)
         } else {
-            val value = (100 - progress) * 255 / 100
+            val value = (128 - progress) * 255 / 128
             PorterDuffColorFilter(Color.argb(value, 0, 0, 0), PorterDuff.Mode.SRC_ATOP)
         }
     }

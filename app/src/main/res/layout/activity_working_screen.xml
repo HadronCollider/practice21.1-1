@@ -71,13 +71,13 @@
 
     <ImageView
         android:id="@+id/image_changing_photo"
-        android:layout_width="291dp"
-        android:layout_height="266dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:contentDescription="@string/changing_photo_description"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@mipmap/test" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
