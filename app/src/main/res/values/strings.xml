@@ -8,4 +8,5 @@
     <string name="starting">Начать обработку</string>
     <string name="logo_description">Логотип приложения</string>
     <string name="final_photo_description">Итоговое фото после обработки</string>
+    <string name="changing_photo_description">Обрабатываемое фото</string>
 </resources>
