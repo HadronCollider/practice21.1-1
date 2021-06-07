@@ -12,11 +12,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class LoadingScreen : AppCompatActivity() {
+    var pictureUri = "sus";
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
@@ -25,9 +27,14 @@ class LoadingScreen : AppCompatActivity() {
             finish()
         }
         val next = findViewById<Button>(R.id.button22)
-        next.setOnClickListener{
-            val intentTo3 = Intent(this, WorkingScreen::class.java)
-            startActivity(intentTo3)
+        next.setOnClickListener {
+            if (pictureUri == "sus") {
+                Toast.makeText(applicationContext, "Выберите фотографию!", Toast.LENGTH_SHORT).show()
+            } else {
+                val intentTo3 = Intent(this, WorkingScreen::class.java)
+                intentTo3.putExtra("pictureUri", pictureUri)
+                startActivity(intentTo3)
+            }
         }
         fun getCameraImages(): List<String> {
             val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -54,9 +61,11 @@ class LoadingScreen : AppCompatActivity() {
             pics.add(Pic(x))
         }
         val rec = findViewById<RecyclerView>(R.id.Recycler)
-        rec.adapter = PicAdapter(this, pics)
+        rec.adapter = PicAdapter(pics, this)
         rec.setLayoutManager(GridLayoutManager(this, 3))
-
+    }
+    public fun setPicture (s : String) {
+        pictureUri = s
     }
 }
 
