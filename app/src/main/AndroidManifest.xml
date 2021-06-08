@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsScreen"></activity>
+        <activity android:name=".SettingsScreen" />
         <activity android:name=".FinishingScreen" />
         <activity android:name=".WorkingScreen" />
         <activity android:name=".LoadingScreen" />
