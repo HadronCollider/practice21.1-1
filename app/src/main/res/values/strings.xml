@@ -9,4 +9,9 @@
     <string name="logo_description">Логотип приложения</string>
     <string name="final_photo_description">Итоговое фото после обработки</string>
     <string name="changing_photo_description">Обрабатываемое фото</string>
+    <string name="white_theme">Светлая тема</string>
+    <string name="black_theme">Тёмная тема</string>
+    <string name="beach_theme">Пляж</string>
+    <string name="green_theme">Природа</string>
+    <string name="theme_icon_description">Иконка темы</string>
 </resources>
