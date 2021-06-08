@@ -3,6 +3,7 @@ package com.makentoshe.androidgithubcitemplate
 import android.R.attr.*
 import android.content.Intent
 import android.graphics.*
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,6 +11,8 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.item_pic.view.*
+import java.io.File
 
 
 class WorkingScreen : AppCompatActivity() {
@@ -39,6 +42,11 @@ class WorkingScreen : AppCompatActivity() {
         }
         val seek = findViewById<SeekBar>(R.id.seekBar)
         val photo = findViewById<ImageView>(R.id.image_changing_photo)
+        if (intent.hasExtra("pictureUri")) {
+            val pictureUri = intent.getStringExtra("pictureUri")
+            Log.d("pic", pictureUri)
+            photo.setImageURI(Uri.fromFile(File(pictureUri)))
+        }
         var currentParameter = 'b'
         seek.progress = 128
         var brightnessLevel = 128

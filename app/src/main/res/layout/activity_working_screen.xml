@@ -30,54 +30,63 @@
         android:id="@+id/seekBar"
         android:layout_width="280dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="20dp"
         android:max="255"
-        app:layout_constraintBottom_toTopOf="@+id/contrast_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/brightness_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="*brightness icon*"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/button31"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/contrast_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginBottom="20dp"
-        android:text="*contrast icon*"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/button31"
-        app:layout_constraintStart_toEndOf="@+id/brightness_button" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.636" />
 
     <Button
         android:id="@+id/rotation_button"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginBottom="20dp"
         android:text="*rotation icon*"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/button32"
-        app:layout_constraintStart_toEndOf="@+id/contrast_button" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.783" />
+
+    <Button
+        android:id="@+id/brightness_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="*brightness icon*"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.783" />
+
+    <Button
+        android:id="@+id/contrast_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="*contrast icon*"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.783" />
 
     <ImageView
         android:id="@+id/image_changing_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:contentDescription="@string/changing_photo_description"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        android:layout_width="314dp"
+        android:layout_height="335dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/test" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.164"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
