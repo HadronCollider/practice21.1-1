@@ -22,6 +22,18 @@ class MainActivity : AppCompatActivity() {
     val RQ = 101;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (ThemeHolder.INSTANCE.realTheme == 'w'){
+            setTheme(R.style.AppTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'd'){
+            setTheme(R.style.DarkTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'b'){
+            setTheme(R.style.BeachTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'g'){
+            setTheme(R.style.GreenTheme)
+        }
         setContentView(R.layout.activity_main)
         val next = findViewById<Button>(R.id.button11)
         next.setOnClickListener{
@@ -39,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         settings.setOnClickListener{
             val intentTo4 = Intent(this,SettingsScreen::class.java)
             startActivity(intentTo4)
+
         }
         val access1 = findViewById<Button>(R.id.button13)
         buttonTaps()
@@ -91,5 +104,14 @@ class MainActivity : AppCompatActivity() {
         }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (ThemeHolder.INSTANCE.mainNeedsToBeChanged){
+            ThemeHolder.INSTANCE.mainNeedsToBeChanged = false
+            recreate()
+        }
+
     }
 }

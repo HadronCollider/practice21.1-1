@@ -19,6 +19,18 @@ import androidx.recyclerview.widget.RecyclerView
 class LoadingScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (ThemeHolder.INSTANCE.realTheme == 'w'){
+            setTheme(R.style.AppTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'd'){
+            setTheme(R.style.DarkTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'b'){
+            setTheme(R.style.BeachTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'g'){
+            setTheme(R.style.GreenTheme)
+        }
         setContentView(R.layout.activity_loading_screen)
         val prev = findViewById<Button>(R.id.button21)
         prev.setOnClickListener{

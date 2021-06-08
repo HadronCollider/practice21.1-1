@@ -15,6 +15,18 @@ import androidx.appcompat.app.AppCompatActivity
 class WorkingScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (ThemeHolder.INSTANCE.realTheme == 'w'){
+            setTheme(R.style.AppTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'd'){
+            setTheme(R.style.DarkTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'b'){
+            setTheme(R.style.BeachTheme)
+        }
+        if (ThemeHolder.INSTANCE.realTheme == 'g'){
+            setTheme(R.style.GreenTheme)
+        }
         setContentView(R.layout.activity_working_screen)
         val prev = findViewById<Button>(R.id.button31)
         prev.setOnClickListener{
@@ -33,6 +45,8 @@ class WorkingScreen : AppCompatActivity() {
         var contrastLevel = 128
         var rotationLevel = 128
         val brightness = findViewById<Button>(R.id.brightness_button)
+        val contrast = findViewById<Button>(R.id.contrast_button)
+        val rotation = findViewById<Button>(R.id.rotation_button)
         brightness.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
             val whatWasCurrent = currentParameter
@@ -46,7 +60,7 @@ class WorkingScreen : AppCompatActivity() {
                 seek.progress = brightnessLevel
             }
         }
-        val contrast = findViewById<Button>(R.id.contrast_button)
+
         contrast.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
             val whatWasCurrent = currentParameter
@@ -60,7 +74,7 @@ class WorkingScreen : AppCompatActivity() {
                 seek.progress = contrastLevel
             }
         }
-        val rotation = findViewById<Button>(R.id.rotation_button)
+
         rotation.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
             val whatWasCurrent = currentParameter
@@ -91,7 +105,6 @@ class WorkingScreen : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-
     }
     fun changeBrightness(progress: Int): PorterDuffColorFilter {
         return if (progress >= 128) {
