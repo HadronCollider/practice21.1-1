@@ -4,12 +4,7 @@ import ThemeHolder
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.LayerDrawable
+import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +14,6 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
-import kotlinx.android.synthetic.main.item_pic.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -68,6 +62,8 @@ class WorkingScreen : AppCompatActivity() {
         val brightness = findViewById<Button>(R.id.brightness_button)
         val contrast = findViewById<Button>(R.id.contrast_button)
         val rotation = findViewById<Button>(R.id.rotation_button)
+
+
         brightness.setOnClickListener{
             Log.d("chosenFeature",currentParameter.toString())
             val whatWasCurrent = currentParameter
@@ -112,7 +108,27 @@ class WorkingScreen : AppCompatActivity() {
         seek.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (currentParameter == 'b'){
-                    photo.colorFilter = changeBrightness(progress)
+                    val sourceBitmap = photo.drawable.toBitmap()
+                    val colorTransform = floatArrayOf(
+                        1f, 0f, 0f, 0f, 0f,
+                        0f, 1f, 0f, 0f, 0f,
+                        0f, 0f, 1f, 0f, 0f,
+                        0f, 0f, 0f, 1f, progress.toFloat() / 255
+                    )
+                    val colorMatrix = ColorMatrix()
+                    colorMatrix.set(colorTransform)
+                    val colorFilter = ColorMatrixColorFilter(colorMatrix)
+                    val paint = Paint()
+                    paint.colorFilter = colorFilter
+                    val display = windowManager.defaultDisplay
+                    val resultBitmap = Bitmap.createBitmap(
+                        sourceBitmap, 0,
+                        0, photo.width, photo.height
+                    )
+
+                    photo.setImageBitmap(resultBitmap)
+                    val canvas = Canvas(resultBitmap)
+                    canvas.drawBitmap(resultBitmap, 0f, 0f, paint)
                 }
                 if (currentParameter == 'c'){
                 }
@@ -126,15 +142,6 @@ class WorkingScreen : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
-    }
-    fun changeBrightness(progress: Int): PorterDuffColorFilter {
-        return if (progress >= 128) {
-            val value = (progress - 128) * 255 / 128
-            PorterDuffColorFilter(Color.argb(value, 255, 255, 255), PorterDuff.Mode.SRC_OVER)
-        } else {
-            val value = (128 - progress) * 255 / 128
-            PorterDuffColorFilter(Color.argb(value, 0, 0, 0), PorterDuff.Mode.SRC_ATOP)
-        }
     }
     private fun saveToInternalStorage(bitmapImage: Bitmap): String? {
         val cw = ContextWrapper(applicationContext)
@@ -158,4 +165,5 @@ class WorkingScreen : AppCompatActivity() {
         Log.d("debug", mypath.absolutePath)
         return directory.absolutePath;
     }
+
 }
