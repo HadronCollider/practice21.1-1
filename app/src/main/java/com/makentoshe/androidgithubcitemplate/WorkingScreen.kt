@@ -14,6 +14,7 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -49,9 +50,13 @@ class WorkingScreen : AppCompatActivity() {
         val next = findViewById<Button>(R.id.button32)
         next.setOnClickListener{
             val intentTo5 = Intent(this, FinishingScreen::class.java)
-            val bitmap: Bitmap = photo.drawable.toBitmap();
-            intentTo5.putExtra("path", saveToInternalStorage(bitmap))
-            Log.d("debug", saveToInternalStorage(bitmap))
+            photo.setDrawingCacheEnabled(true)
+            photo.buildDrawingCache()
+            val bm: Bitmap = photo.getDrawingCache()
+            val baos = ByteArrayOutputStream()
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            intentTo5.putExtra("path", saveToInternalStorage(bm))
+            Log.d("debug", saveToInternalStorage(bm))
             startActivity(intentTo5)
         }
         var currentParameter = 'b'
@@ -108,27 +113,19 @@ class WorkingScreen : AppCompatActivity() {
         seek.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (currentParameter == 'b'){
-                    val sourceBitmap = photo.drawable.toBitmap()
+                    val source = photo.drawable
                     val colorTransform = floatArrayOf(
-                        1f, 0f, 0f, 0f, 0f,
-                        0f, 1f, 0f, 0f, 0f,
-                        0f, 0f, 1f, 0f, 0f,
-                        0f, 0f, 0f, 1f, progress.toFloat() / 255
+                        (progress.toFloat() - 64) / 64, 0f, 0f, 0f, 0f,
+                        0f, (progress.toFloat() - 64) / 64, 0f, 0f, 0f,
+                        0f, 0f, (progress.toFloat() - 64) / 64, 0f, 0f,
+                        0f, 0f, 0f, 1f, 0f
                     )
+                    Log.d("k", progress.toString())
                     val colorMatrix = ColorMatrix()
                     colorMatrix.set(colorTransform)
                     val colorFilter = ColorMatrixColorFilter(colorMatrix)
-                    val paint = Paint()
-                    paint.colorFilter = colorFilter
-                    val display = windowManager.defaultDisplay
-                    val resultBitmap = Bitmap.createBitmap(
-                        sourceBitmap, 0,
-                        0, photo.width, photo.height
-                    )
-
-                    photo.setImageBitmap(resultBitmap)
-                    val canvas = Canvas(resultBitmap)
-                    canvas.drawBitmap(resultBitmap, 0f, 0f, paint)
+                    source.colorFilter = colorFilter
+                    photo.setImageDrawable(source)
                 }
                 if (currentParameter == 'c'){
                 }
