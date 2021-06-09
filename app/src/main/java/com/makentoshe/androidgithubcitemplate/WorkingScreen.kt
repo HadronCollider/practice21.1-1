@@ -1,8 +1,15 @@
 package com.makentoshe.androidgithubcitemplate
 
-import android.R.attr.*
+import ThemeHolder
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +18,11 @@ import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.item_pic.view.*
+import androidx.core.graphics.drawable.toBitmap
+import kotlinx.android.synthetic.main.item_pic.*
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class WorkingScreen : AppCompatActivity() {
@@ -35,17 +45,20 @@ class WorkingScreen : AppCompatActivity() {
         prev.setOnClickListener{
             finish()
         }
-        val next = findViewById<Button>(R.id.button32)
-        next.setOnClickListener{
-            val intentTo5 = Intent(this, FinishingScreen::class.java)
-            startActivity(intentTo5)
-        }
         val seek = findViewById<SeekBar>(R.id.seekBar)
         val photo = findViewById<ImageView>(R.id.image_changing_photo)
         if (intent.hasExtra("pictureUri")) {
             val pictureUri = intent.getStringExtra("pictureUri")
             Log.d("pic", pictureUri)
             photo.setImageURI(Uri.fromFile(File(pictureUri)))
+        }
+        val next = findViewById<Button>(R.id.button32)
+        next.setOnClickListener{
+            val intentTo5 = Intent(this, FinishingScreen::class.java)
+            val bitmap: Bitmap = photo.drawable.toBitmap();
+            intentTo5.putExtra("path", saveToInternalStorage(bitmap))
+            Log.d("debug", saveToInternalStorage(bitmap))
+            startActivity(intentTo5)
         }
         var currentParameter = 'b'
         seek.progress = 128
@@ -122,5 +135,27 @@ class WorkingScreen : AppCompatActivity() {
             val value = (128 - progress) * 255 / 128
             PorterDuffColorFilter(Color.argb(value, 0, 0, 0), PorterDuff.Mode.SRC_ATOP)
         }
+    }
+    private fun saveToInternalStorage(bitmapImage: Bitmap): String? {
+        val cw = ContextWrapper(applicationContext)
+        val directory = cw.getDir("imageDir", Context.MODE_PRIVATE)
+        val mypath = File(directory, "profile.jpg")
+        Log.d("debug", mypath.absolutePath)
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(mypath)
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                fos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+        Log.d("debug", mypath.absolutePath)
+        return directory.absolutePath;
     }
 }
