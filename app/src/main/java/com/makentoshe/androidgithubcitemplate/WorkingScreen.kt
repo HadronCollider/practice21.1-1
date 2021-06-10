@@ -15,6 +15,7 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
+import kotlinx.android.synthetic.main.activity_working_screen.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -73,6 +74,10 @@ class WorkingScreen : AppCompatActivity() {
         val redFilterButton = findViewById<Button>(R.id.redButton)
         val resetButton = findViewById<ImageButton>(R.id.resetButton)
         greenFilterButton.setOnClickListener{
+            redButton.setBackgroundDrawable(getResources().getDrawable(R.color.red))
+            greenButton.setBackgroundDrawable(getResources().getDrawable(R.color.green))
+            blueButton.setBackgroundDrawable(getResources().getDrawable(R.color.blue))
+            brightness_button.setBackgroundDrawable(getResources().getDrawable(R.color.grey))
             val whatWasCurrent = currentParameter
             currentParameter = 'c'
             if (whatWasCurrent == 'b'){
@@ -91,6 +96,10 @@ class WorkingScreen : AppCompatActivity() {
 
         }
         redFilterButton.setOnClickListener{
+            redButton.setBackgroundDrawable(getResources().getDrawable(R.color.pressed_red))
+            greenButton.setBackgroundDrawable(getResources().getDrawable(R.color.button_green))
+            blueButton.setBackgroundDrawable(getResources().getDrawable(R.color.blue))
+            brightness_button.setBackgroundDrawable(getResources().getDrawable(R.color.grey))
             val whatWasCurrent = currentParameter
             currentParameter = 'c'
             if (whatWasCurrent == 'b'){
@@ -109,6 +118,10 @@ class WorkingScreen : AppCompatActivity() {
 
         }
         blueFilterButton.setOnClickListener{
+            redButton.setBackgroundDrawable(getResources().getDrawable(R.color.red))
+            greenButton.setBackgroundDrawable(getResources().getDrawable(R.color.button_green))
+            blueButton.setBackgroundDrawable(getResources().getDrawable(R.color.pressed_blue))
+            brightness_button.setBackgroundDrawable(getResources().getDrawable(R.color.grey))
             val whatWasCurrent = currentParameter
             currentParameter = 'c'
             if (whatWasCurrent == 'b'){
@@ -127,6 +140,10 @@ class WorkingScreen : AppCompatActivity() {
 
         }
         resetButton.setOnClickListener{
+            redButton.setBackgroundDrawable(getResources().getDrawable(R.color.red))
+            greenButton.setBackgroundDrawable(getResources().getDrawable(R.color.button_green))
+            blueButton.setBackgroundDrawable(getResources().getDrawable(R.color.blue))
+            brightness_button.setBackgroundDrawable(getResources().getDrawable(R.color.grey))
             redlevel = 0
             bluelevel = 0
             greenlevel = 0
@@ -148,6 +165,10 @@ class WorkingScreen : AppCompatActivity() {
             photo.setImageDrawable(source)
         }
         brightness.setOnClickListener{
+            redButton.setBackgroundDrawable(getResources().getDrawable(R.color.red))
+            greenButton.setBackgroundDrawable(getResources().getDrawable(R.color.button_green))
+            blueButton.setBackgroundDrawable(getResources().getDrawable(R.color.blue))
+            brightness_button.setBackgroundDrawable(getResources().getDrawable(R.color.grey_pressed))
             val whatWasCurrent = currentParameter
             currentParameter = 'b'
             if (whatWasCurrent == 'c'){
