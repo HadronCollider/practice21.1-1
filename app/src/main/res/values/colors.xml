@@ -5,9 +5,16 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="pale_yellow">#FFFF99</color>
-    <color name="deep_blue">#0000FF</color>
+    <color name="deep_blue">#0000CC</color>
     <color name="orange">#FDC62D</color>
     <color name="light_green">#B2FF66</color>
     <color name="green">#003300</color>
     <color name="yellow">#FFFF66</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="button_green">#009900</color>
+    <color name="purple">#CC00CC</color>
+    <color name="pressed_red">#AA0000</color>
+    <color name="pressed_blue">#0000AA</color>
+    <color name="grey_pressed">#A0A0A0</color>
 </resources>

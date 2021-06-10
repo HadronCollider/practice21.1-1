@@ -4,7 +4,7 @@
     <string name="prev">Назад</string>
     <string name="conformation">Подтвердить</string>
     <string name="saving">Сохранить</string>
-    <string name="settings">Настройки</string>
+    <string name="settings">Настройки темы</string>
     <string name="starting">Начать обработку</string>
     <string name="logo_description">Логотип приложения</string>
     <string name="final_photo_description">Итоговое фото после обработки</string>
@@ -14,4 +14,6 @@
     <string name="beach_theme">Пляж</string>
     <string name="green_theme">Природа</string>
     <string name="theme_icon_description">Иконка темы</string>
+    <string name="brightness_icon_description">Иконка яркости</string>
+    <string name="reset_icon_description">Иконка сброса</string>
 </resources>
