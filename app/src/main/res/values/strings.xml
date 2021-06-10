@@ -14,4 +14,6 @@
     <string name="beach_theme">Пляж</string>
     <string name="green_theme">Природа</string>
     <string name="theme_icon_description">Иконка темы</string>
+    <string name="brightness_icon_description">Иконка яркости</string>
+    <string name="reset_icon_description">Иконка сброса</string>
 </resources>
