@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -61,72 +62,95 @@ class WorkingScreen : AppCompatActivity() {
         }
         var chosenFilter = 'w'
         var currentParameter = 'b'
-        seek.progress = 128
-        var brightnessLevel = 128
-        var coloringlevel = 128
-        var rotationLevel = 128
-        var redlevel = 128
-        var bluelevel = 128
-        var greenlevel = 128
-        val brightness = findViewById<Button>(R.id.brightness_button)
-        val contrast = findViewById<Button>(R.id.contrast_button)
-        val rotation = findViewById<Button>(R.id.rotation_button)
+        seek.progress = 64
+        var brightnessLevel = 64
+        var redlevel = 0
+        var bluelevel = 0
+        var greenlevel = 0
+        val brightness = findViewById<ImageButton>(R.id.brightness_button)
         val greenFilterButton = findViewById<Button>(R.id.greenButton)
         val blueFilterButton = findViewById<Button>(R.id.blueButton)
         val redFilterButton = findViewById<Button>(R.id.redButton)
-        val purpleFilterButton = findViewById<Button>(R.id.purpleButton)
+        val resetButton = findViewById<ImageButton>(R.id.resetButton)
         greenFilterButton.setOnClickListener{
-            chosenFilter = 'g'
-        }
-        redFilterButton.setOnClickListener{
-            chosenFilter = 'r'
-        }
-        blueFilterButton.setOnClickListener{
-            chosenFilter = 'b'
-        }
-        purpleFilterButton.setOnClickListener{
-            chosenFilter = 'p'
-        }
-
-
-        brightness.setOnClickListener{
-            Log.d("chosenFeature",currentParameter.toString())
-            val whatWasCurrent = currentParameter
-            currentParameter = 'b'
-            if (whatWasCurrent == 'c'){
-                coloringlevel = seek.progress
-                seek.progress = brightnessLevel
-            }
-            if (whatWasCurrent == 'r'){
-                rotationLevel = seek.progress
-                seek.progress = brightnessLevel
-            }
-        }
-
-        contrast.setOnClickListener{
-            Log.d("chosenFeature",currentParameter.toString())
             val whatWasCurrent = currentParameter
             currentParameter = 'c'
             if (whatWasCurrent == 'b'){
                 brightnessLevel = seek.progress
-                seek.progress = coloringlevel
-            }
-            if (whatWasCurrent == 'r'){
-                rotationLevel = seek.progress
-                seek.progress = coloringlevel
-            }
-        }
-
-        rotation.setOnClickListener{
-            Log.d("chosenFeature",currentParameter.toString())
-            val whatWasCurrent = currentParameter
-            currentParameter = 'r'
-            if (whatWasCurrent == 'b'){
-                brightnessLevel = seek.progress
-                seek.progress = rotationLevel
             }
             if (whatWasCurrent == 'c'){
-                coloringlevel = seek.progress
+                if (chosenFilter == 'b'){
+                    bluelevel = seek.progress
+                }
+                if (chosenFilter == 'r'){
+                    redlevel = seek.progress
+                }
+            }
+            chosenFilter = 'g'
+            seek.progress = greenlevel
+
+        }
+        redFilterButton.setOnClickListener{
+            val whatWasCurrent = currentParameter
+            currentParameter = 'c'
+            if (whatWasCurrent == 'b'){
+                brightnessLevel = seek.progress
+            }
+            if (whatWasCurrent == 'c'){
+                if (chosenFilter == 'g'){
+                    greenlevel = seek.progress
+                }
+                if (chosenFilter == 'b'){
+                    bluelevel = seek.progress
+                }
+            }
+            chosenFilter = 'r'
+            seek.progress = redlevel
+
+        }
+        blueFilterButton.setOnClickListener{
+            val whatWasCurrent = currentParameter
+            currentParameter = 'c'
+            if (whatWasCurrent == 'b'){
+                brightnessLevel = seek.progress
+            }
+            if (whatWasCurrent == 'c'){
+                if (chosenFilter == 'g'){
+                    greenlevel = seek.progress
+                }
+                if (chosenFilter == 'r'){
+                    redlevel = seek.progress
+                }
+            }
+            chosenFilter = 'b'
+            seek.progress = bluelevel
+
+        }
+        resetButton.setOnClickListener{
+            redlevel = 0
+            bluelevel = 0
+            greenlevel = 0
+            brightnessLevel = 64
+            seek.progress = 64
+            chosenFilter = 'w'
+            val source = photo.drawable
+            val colorTransform = floatArrayOf(
+                brightnessLevel.toFloat()/ 64, redlevel.toFloat() / 256, 0f, 0f, 0f,
+                0f, brightnessLevel.toFloat()/ 64, greenlevel.toFloat() / 256, 0f, 0f,
+                0f, 0f, brightnessLevel.toFloat()/ 64, bluelevel.toFloat() / 256, 0f,
+                0f, 0f, 0f, 1f, 0f
+            )
+            Log.d("k", brightnessLevel.toString())
+            val colorMatrix = ColorMatrix()
+            colorMatrix.set(colorTransform)
+            val colorFilter = ColorMatrixColorFilter(colorMatrix)
+            source.colorFilter = colorFilter
+            photo.setImageDrawable(source)
+        }
+        brightness.setOnClickListener{
+            val whatWasCurrent = currentParameter
+            currentParameter = 'b'
+            if (whatWasCurrent == 'c'){
                 if (chosenFilter == 'g'){
                     greenlevel = seek.progress
                 }
@@ -136,17 +160,17 @@ class WorkingScreen : AppCompatActivity() {
                 if (chosenFilter == 'b'){
                     bluelevel = seek.progress
                 }
-                seek.progress = rotationLevel
+                seek.progress = brightnessLevel
             }
         }
         seek.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (currentParameter == 'b'){
+                if (currentParameter == 'b') {
                     val source = photo.drawable
                     val colorTransform = floatArrayOf(
-                        (progress.toFloat() - 64) / 64, redlevel.toFloat() / 128, 0f, 0f, 0f,
-                        0f, (progress.toFloat() - 64) / 64, greenlevel.toFloat() / 128, 0f, 0f,
-                        0f, 0f, (progress.toFloat() - 64) / 64, bluelevel.toFloat() / 128, 0f,
+                        progress.toFloat()/ 64, redlevel.toFloat() / 256, 0f, 0f, 0f,
+                        0f, progress.toFloat()/ 64, greenlevel.toFloat() / 256, 0f, 0f,
+                        0f, 0f, progress.toFloat()/ 64, bluelevel.toFloat() / 256, 0f,
                         0f, 0f, 0f, 1f, 0f
                     )
                     Log.d("k", progress.toString())
@@ -156,35 +180,35 @@ class WorkingScreen : AppCompatActivity() {
                     source.colorFilter = colorFilter
                     photo.setImageDrawable(source)
                 }
-                if (currentParameter == 'c'){
+                if (currentParameter == 'c') {
                     val source = photo.drawable
                     var colorTransform = floatArrayOf(
-                        (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f, 0f,
-                        0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f,
-                        0f, 0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f,
+                        brightnessLevel.toFloat()/ 64, 0f, 0f, 0f, 0f,
+                        0f, brightnessLevel.toFloat()/ 64, 0f, 0f, 0f,
+                        0f, 0f, brightnessLevel.toFloat()/ 64, 0f, 0f,
                         0f, 0f, 0f, 1f, 0f
                     )
-                    if (chosenFilter == 'r'){
+                    if (chosenFilter == 'r') {
                         colorTransform = floatArrayOf(
-                            (brightnessLevel.toFloat() - 64) / 64, progress.toFloat() / 128, 0f, 0f, 0f,
-                            0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f,
-                            0f, 0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f,
+                            brightnessLevel.toFloat()/ 64, progress.toFloat() / 256, 0f, 0f, 0f,
+                            0f, brightnessLevel.toFloat()/ 64, greenlevel.toFloat() / 256, 0f, 0f,
+                            0f, 0f, brightnessLevel.toFloat()/ 64, bluelevel.toFloat() / 256, 0f,
                             0f, 0f, 0f, 1f, 0f
                         )
                     }
-                    if (chosenFilter == 'g'){
+                    if (chosenFilter == 'g') {
                         colorTransform = floatArrayOf(
-                            (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f, 0f,
-                            0f, (brightnessLevel.toFloat() - 64) / 64, progress.toFloat() / 128, 0f, 0f,
-                            0f, 0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f,
+                            brightnessLevel.toFloat() / 64, redlevel.toFloat() / 256, 0f, 0f, 0f,
+                            0f, brightnessLevel.toFloat()/ 64, progress.toFloat() / 256, 0f, 0f,
+                            0f, 0f, brightnessLevel.toFloat() / 64, bluelevel.toFloat() / 256, 0f,
                             0f, 0f, 0f, 1f, 0f
                         )
                     }
-                    if (chosenFilter == 'b'){
+                    if (chosenFilter == 'b') {
                         colorTransform = floatArrayOf(
-                            (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f, 0f,
-                            0f, (brightnessLevel.toFloat() - 64) / 64, 0f, 0f, 0f,
-                            0f, 0f, (brightnessLevel.toFloat() - 64) / 64, progress.toFloat() / 128, 0f,
+                            brightnessLevel.toFloat()/ 64, redlevel.toFloat() / 256, 0f, 0f, 0f,
+                            0f, brightnessLevel.toFloat() / 64, greenlevel.toFloat() / 256, 0f, 0f,
+                            0f, 0f, brightnessLevel.toFloat()/ 64, progress.toFloat() / 256, 0f,
                             0f, 0f, 0f, 1f, 0f
                         )
                     }
@@ -194,12 +218,6 @@ class WorkingScreen : AppCompatActivity() {
                     val colorFilter = ColorMatrixColorFilter(colorMatrix)
                     source.colorFilter = colorFilter
                     photo.setImageDrawable(source)
-                }
-                if (currentParameter == 'r'){
-                    photo.rotation = (progress.toFloat() - 128) * 180 / 128
-                    if (progress == 255){
-                        photo.rotation = 180.toFloat()
-                    }
                 }
             }
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
