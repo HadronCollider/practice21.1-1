@@ -64,8 +64,8 @@
 
             <ImageButton
                 android:id="@+id/brightness_button"
-                style="@style/Widget.AppCompat.Button"
-                android:src="@drawable/sun"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:src="@drawable/brightness_icon"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@color/grey"
@@ -79,7 +79,7 @@
 
             <Button
                 android:id="@+id/redButton"
-                style="@style/Widget.AppCompat.Button"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="15dp"
@@ -118,14 +118,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@color/grey"
                 android:contentDescription="@string/reset_icon_description"
-                android:src="@drawable/reset"
+                android:src="@drawable/reset_icon"
                 app:layout_constraintBottom_toTopOf="@+id/seekBar"
                 app:layout_constraintStart_toStartOf="parent" />
+
 
         </LinearLayout>
 
     </HorizontalScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,4 +14,7 @@
     <color name="blue">#0000FF</color>
     <color name="button_green">#009900</color>
     <color name="purple">#CC00CC</color>
+    <color name="pressed_red">#AA0000</color>
+    <color name="pressed_blue">#0000AA</color>
+    <color name="grey_pressed">#A0A0A0</color>
 </resources>
