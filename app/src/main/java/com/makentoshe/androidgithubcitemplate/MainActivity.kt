@@ -20,6 +20,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     val RQ = 101;
+    val RQ1 = 228
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (ThemeHolder.INSTANCE.realTheme == 'w'){
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     private fun buttonTaps(){
         button13.setOnClickListener {
             checkForPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE, "read media files", RQ)
+            checkForPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, "write media files", RQ1)
         }
 
     }
@@ -88,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         when (requestCode){
             RQ -> innerCheck("read media files")
-
+            RQ1-> innerCheck("write media files")
         }
     }
 
